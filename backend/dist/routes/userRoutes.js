@@ -14,10 +14,13 @@ router.post("/sign-in", async (req, res) => {
     const user = await prisma.user.findFirst({
         where: {
             username: username,
-        }
+        },
     });
     if (!user) {
-        res.status(400).json({ message: "user not found :please create first Account", status: false });
+        res.status(400).json({
+            message: "user not found :please create first Account",
+            status: false,
+        });
     }
     const isMatched = await bcrypt_1.default.compare(password, user?.password || "");
     if (!isMatched) {
@@ -28,7 +31,11 @@ router.post("/sign-in", async (req, res) => {
         message: "login successfully",
         status: true,
         token,
-        user,
+        user: {
+            username: user?.username,
+            firstName: user?.firstName,
+            lastName: user?.lastName,
+        },
     });
 });
 router.post("/sign-up", async (req, res) => {
@@ -60,7 +67,11 @@ router.post("/sign-up", async (req, res) => {
                 message: "User created successfully",
                 status: true,
                 token,
-                data: user,
+                user: {
+                    username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                },
             });
         }
     }
