@@ -23,3 +23,4 @@ app.use("/api/v1/task", taskRoutes_1.default);
 app.listen(PORT, () => {
     console.log(`Listening at port ${PORT}`);
 });
+exports.default = app;
