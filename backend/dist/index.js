@@ -19,4 +19,7 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use("/api/v1/user", userRoutes_1.default);
 app.use("/api/v1/task", taskRoutes_1.default);
+app.listen(8008, () => {
+    console.log("lsidfaosif");
+});
 exports.default = app;
