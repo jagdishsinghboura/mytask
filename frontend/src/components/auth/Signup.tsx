@@ -105,7 +105,7 @@ const SignUp = () => {
             Submit
           </button>
         </form>
-        <p className="w-full text-center">Aready have an account? <Link to={"/sing-in"}>Sign-in</Link></p>
+        <p className="w-full text-center">Aready have an account? <Link to={"/sign-in"} className="text-base text-blue-500 hover:cursor-pointer ">sing-in</Link></p>
       </div>
     </div>
   );

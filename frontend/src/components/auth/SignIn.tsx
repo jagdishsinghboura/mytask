@@ -73,7 +73,7 @@ const SignIn = () => {
             Submit
           </button>
         </form>
-        <p className="w-full text-center">You don't have an account? <Link to={"/sing-up"} className="text-base text-blue-500 hover:cursor-pointer ">sign-up</Link></p>
+        <p className="w-full text-center">You don't have an account? <Link to={"/sign-up"} className="text-base text-blue-500 hover:cursor-pointer ">sign-up</Link></p>
       </div>
     </div>
   );
