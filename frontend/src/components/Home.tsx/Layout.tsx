@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Sidebar from '../Sidebar'
 import Header from '../Header'
 // import AddTask from '../dashboard/AddTask'

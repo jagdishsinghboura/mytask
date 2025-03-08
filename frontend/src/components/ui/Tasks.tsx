@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import axios from "axios";
 
@@ -37,13 +37,12 @@ const Tasks = ({ taskTitleName, type }: Props) => {
   useEffect(() => {
     const fetchTasks = async () => {
       const res = await getTasks(type);
-      
-      console.log("slkdfngdrsklgnml" ,res);
-      setTasks(res.data);
+  
+      console.log("slkdfngdrsklgnml", res); 
+      setTasks(res);
     };
-
+  
     fetchTasks();
-    
   }, [type]); 
 
   return (

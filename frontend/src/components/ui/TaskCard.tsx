@@ -1,4 +1,3 @@
-import React from "react";
 import { Task } from "./Tasks";
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";

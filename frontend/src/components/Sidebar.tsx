@@ -1,4 +1,3 @@
-import React from "react";
 import { IoMdAdd } from "react-icons/io";
 import { MdTask } from "react-icons/md";
 import { FaTasks } from "react-icons/fa";
