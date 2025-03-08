@@ -44,7 +44,7 @@ const UpdateTask = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:8080/api/v1/task/update/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/v1/task/update/${id}`,
         data,
         {
           headers: { Authorization: `Bearer ${token}` }, 
@@ -69,7 +69,7 @@ const UpdateTask = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `http://localhost:8080/api/v1/task/mytask/${taskId}`,
+          `${import.meta.env.VITE_API_URL}/api/v1/task/mytask/${taskId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

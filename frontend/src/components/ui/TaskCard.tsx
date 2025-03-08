@@ -15,7 +15,7 @@ const TaskCard = ({id, title, description, dueDate}:Task) => {
       const token = localStorage.getItem("token");
       console.log(token);
       
-      const res = await axios.delete(`http://localhost:8080/api/v1/task/delete/${id}`,{
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/v1/task/delete/${id}`,{
         headers: { Authorization: `Bearer ${token}` }
       });
       if(res.status===200){
@@ -36,7 +36,7 @@ const TaskCard = ({id, title, description, dueDate}:Task) => {
       
       
       const res = await axios.put(
-        `http://localhost:8080/api/v1/task/complete/${id}`,{},
+        `${import.meta.env.VITE_API_URL}/api/v1/task/complete/${id}`,{},
         {
           headers: { Authorization: `Bearer ${token}` }, 
         }
