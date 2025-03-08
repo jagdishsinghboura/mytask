@@ -20,4 +20,9 @@ app.use(cors());
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/task", taskRoutes);
 
+
+app.listen(8008, ()=>{
+  console.log("lsidfaosif");
+  
+})
 export default app;
