@@ -7,6 +7,7 @@ import TodayTasks from "./components/dashboard/TodayTasks";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/Signup";
 import UpdateTask from "./components/dashboard/UpdateTask";
+import PendingTasks from "./components/dashboard/PendingTasks";
 
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="completed" element={<CompletedTasks />} />
           <Route path="add" element={<AddTask />} />
           <Route path="update" element={<UpdateTask />} />
+          <Route path="pending" element={< PendingTasks/>} />
         </Route>
         <Route path="/sign-in" element={<SignIn/>}/>
         <Route path="/sign-up" element={<SignUp/>}/>
