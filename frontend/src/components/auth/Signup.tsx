@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ const SignUp = () => {
             Submit
           </button>
         </form>
-        <p className="w-full text-center">Aready have an account? SignIn</p>
+        <p className="w-full text-center">Aready have an account? <Link to={"/sing-in"}>Sign-in</Link></p>
       </div>
     </div>
   );

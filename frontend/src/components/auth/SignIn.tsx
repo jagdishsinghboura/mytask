@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
 
@@ -73,7 +73,7 @@ const SignIn = () => {
             Submit
           </button>
         </form>
-        <p className="w-full text-center">You don't have an account? Signup</p>
+        <p className="w-full text-center">You don't have an account? <Link to={"/sing-up"} className="text-base text-blue-500 hover:cursor-pointer ">sign-up</Link></p>
       </div>
     </div>
   );
