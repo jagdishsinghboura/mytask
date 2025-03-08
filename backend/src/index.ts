@@ -1,16 +1,13 @@
 import express, { Request, Response } from "express";
 
-import   userRoutes from "./routes/userRoutes"
-import   taskRoutes from "./routes/taskRoutes"
-import  cors from "cors"
+import userRoutes from "./routes/userRoutes";
+import taskRoutes from "./routes/taskRoutes";
+import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import bodyParser from "body-parser";
 
 const app = express();
-
-const PORT = process.env.PORT || 8080;
-
-const prisma =new  PrismaClient()
+const prisma = new PrismaClient();
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, Express with TypeScript!");
@@ -23,13 +20,4 @@ app.use(cors());
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/task", taskRoutes);
 
-
-app.listen(PORT, () => {
-  console.log(`Listening at port ${PORT}`);
-});
-
-
 export default app;
-
-
-
