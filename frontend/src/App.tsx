@@ -18,7 +18,7 @@ function App() {
     <Router>
       <Routes>
       <Route path="/" element={<Layout />}>
-          <Route index element={<TodayTasks />} /> {/* Default page */}
+          <Route index element={<TodayTasks />} /> 
           <Route path="today" element={<TodayTasks />} />
           <Route path="all" element={<AllTasks />} />
           <Route path="completed" element={<CompletedTasks />} />

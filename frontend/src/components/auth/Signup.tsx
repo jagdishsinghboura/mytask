@@ -14,7 +14,7 @@ const SignUp = () => {
 
       if(response){
         localStorage.setItem("token", response.data.token);
-        console.log("you are sign up ");
+        console.log("you are sign up ", response.data.user);
         navigate("/")
       }
       } catch (error) {

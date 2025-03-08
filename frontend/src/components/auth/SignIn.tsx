@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useDispatch, } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { setUser } from "../../utils/redux/userSlice";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const {
@@ -19,7 +22,9 @@ const SignIn = () => {
 
     if(response){
       localStorage.setItem("token", response.data.token);
-      console.log("you are sign in ");
+
+      dispatch(setUser(response.data.user));
+
       navigate("/");
     }
     
