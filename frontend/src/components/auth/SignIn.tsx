@@ -11,7 +11,9 @@ const SignIn = () => {
   } = useForm();
 
   const onSubmit = async(data: object) => {
-    const response = await axios.post(`http:localhost:8080/api/v1/user/sign-in` , data);
+    console.log(data);
+    
+    const response = await axios.post(`http://localhost:8080/api/v1/user/sign-in` , data);
 
     console.log(response);
 

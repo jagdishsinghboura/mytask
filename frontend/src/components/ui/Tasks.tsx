@@ -18,7 +18,7 @@ const getTasks = async (taskType: string): Promise<Task[]> => {
   try {
     const token = localStorage.getItem("token");
     
-    const res = await axios.get(`http:localhost:8080/api/v1/task/${taskType}`,{
+    const res = await axios.get(`http://localhost:8080/api/v1/task/${taskType}`,{
       headers: { Authorization: `Bearer ${token}` }
     });
 

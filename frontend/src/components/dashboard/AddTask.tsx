@@ -40,7 +40,7 @@ const AddTask = () => {
       }
 
       const response = await axios.post(
-        "http:localhost:8080/api/v1/task/add",
+        "http://localhost:8080/api/v1/task/add",
         data,
         {
           headers: { Authorization: `Bearer ${token}` },
