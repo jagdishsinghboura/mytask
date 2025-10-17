@@ -14,6 +14,9 @@ router.post("/sign-in", async (req: Request, res: Response) => {
     where: {
       username: username,
     },
+    include:{
+      todos:true,
+    }
   });
   if (user==null) {
     res.status(400).json({
@@ -38,10 +41,10 @@ router.post("/sign-in", async (req: Request, res: Response) => {
       username: user?.username,
       firstName: user?.firstName,
       lastName: user?.lastName,
+      todos: user?.todos,
     },
   });
 });
-
 router.post("/sign-up", async (req: Request, res: Response) => {
   const { username, password, firstName, lastName } = req.body;
 
