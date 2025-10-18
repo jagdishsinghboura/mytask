@@ -14,7 +14,7 @@ router.post("/sign-in", async (req: Request, res: Response) : Promise<any>=> {
   const user = await prisma.user.findFirst({
     where: {
       username: username,
-    }
+    },
   });
   
   if (user==null) {
@@ -42,24 +42,20 @@ router.post("/sign-in", async (req: Request, res: Response) : Promise<any>=> {
       lastName: user?.lastName,
     },
   });
-  } catch (error:any) {
-    console.log("error in Sign in : " ,error);
-    
-    return res.status(500).json({
-      message:error.message,
-      user:null
-    })
+}catch (error) {
+    console.log("Error while sign-in", error);
+   return res.status(500).json({
+      message: "Internal server error",
+      status: false,
+    });
   }
+
 });
 
-router.post("/sign-up", async (req: Request, res: Response) : Promise<any>=> {
-  
+router.post("/sign-up", async (req: Request, res: Response): Promise<any> => {
+  const { username, password, firstName, lastName } = req.body;
+
   try {
-    const { username, password, firstName, lastName } = req.body;
-    if(!username|| !password|| !firstName) res.status(401).json({
-      message:"some field are missing ",
-      data:null,
-    })
     const isExistUser = await prisma.user.findFirst({
       where: {
         username: username,
@@ -106,5 +102,6 @@ router.post("/sign-up", async (req: Request, res: Response) : Promise<any>=> {
     });
   }
 });
+
 
 export default router;
