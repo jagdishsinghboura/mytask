@@ -1,7 +1,8 @@
+import Tasks from "../ui/Tasks"
 
 const TodayTasks = () => {
   return (
-    <div>TodayTasks</div>
+    <Tasks taskTitleName="today's tasks"  type='today-tasks'/>
   )
 }
 

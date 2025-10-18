@@ -8,13 +8,15 @@ const router = Router();
 const prisma = new PrismaClient();
 
 router.post("/sign-in", async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  try {
+    const { username, password } = req.body;
 
   const user = await prisma.user.findFirst({
     where: {
       username: username,
-    },
+    }
   });
+  
   if (user==null) {
     res.status(400).json({
       message: "user not found :please create first Account",
@@ -40,12 +42,24 @@ router.post("/sign-in", async (req: Request, res: Response) => {
       lastName: user?.lastName,
     },
   });
+  } catch (error:any) {
+    console.log("error in Sign in : " ,error);
+    
+    res.status(500).json({
+      message:error.message,
+      user:null
+    })
+  }
 });
 
 router.post("/sign-up", async (req: Request, res: Response) => {
-  const { username, password, firstName, lastName } = req.body;
-
+  
   try {
+    const { username, password, firstName, lastName } = req.body;
+    if(!username|| !password|| !firstName) res.status(401).json({
+      message:"some field are missing ",
+      data:null,
+    })
     const isExistUser = await prisma.user.findFirst({
       where: {
         username: username,

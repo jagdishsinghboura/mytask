@@ -1,19 +1,22 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { setUser } from "../../utils/redux/userSlice";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
+  const dispatch = useDispatch();
 
   const onSubmit = async (data: object) => {
       try {
         const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/user/sign-up` , data);
 
-      console.log(response);
 
       if(response){
         localStorage.setItem("token", response.data.token);
+        dispatch(setUser(response.data.user));
         console.log("you are sign up ", response.data.user);
         navigate("/")
       }

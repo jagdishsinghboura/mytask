@@ -21,8 +21,8 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/task", taskRoutes);
 
 
-app.listen(8008, ()=>{
-  console.log("lsidfaosif");
+app.listen(process.env.PORT, ()=>{
+  console.log("port is listing at : ", process.env.PORT);
   
 })
 export default app;

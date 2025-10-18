@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../utils/redux/store";
+import { useNavigate } from "react-router-dom";
+
 
 interface Props {
   taskTitleName: string;
@@ -11,47 +15,57 @@ export interface Task {
   id: number;
   title: string;
   description: string;
+  status: string,
   dueDate: string;
+  createdAt: Date,
+  updatedAt: Date,
 }
 
 const getTasks = async (taskType: string): Promise<Task[]> => {
   try {
     const token = localStorage.getItem("token");
-    
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/task/${taskType}`,{
+
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/task/${taskType}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    console.log(res.data);
-    
-    return res.data.data; 
-  } catch (error) {
+
+    return res.data.data;
+  } catch (error:any) {
     console.error("Error fetching tasks:", error);
-    return []; 
+    return [];
   }
 };
 
 const Tasks = ({ taskTitleName, type }: Props) => {
-  const [tasks, setTasks] = useState<Task[]>([]); 
+
+
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      const res = await getTasks(type);
-  
-      console.log("slkdfngdrsklgnml", res); 
-      setTasks(res);
-    };
-  
-    fetchTasks();
-  }, [type]); 
+   async function fetchTasks(type:string){
+     const todos = await  getTasks(type);
+     setTasks(todos);
+    }
+    fetchTasks(type)
+  }, [type]);
 
   return (
     <div className="w-full flex flex-col m-5">
       <h1 className="text-3xl font-bold text-gray-900">{taskTitleName || "Task"}</h1>
-      <div className="flex flex-wrap gap-6 justify-center">
+      <div className="flex  gap-6 justify-start flex-wrap">
         {tasks.length > 0 ? (
           tasks.map((task) => (
-            <TaskCard key={task.id} id={task.id} title={task.title} description={task.description} dueDate={task.dueDate} />
+            <TaskCard
+              key={task.id} 
+              id={task.id}
+              status={task.status}
+              title={task.title} 
+              description={task.description} 
+              dueDate={task.dueDate}
+              createdAt={task.createdAt}
+              updatedAt={task.updatedAt}
+              />
           ))
         ) : (
           <p className="text-gray-500 m-10">No tasks available.</p>

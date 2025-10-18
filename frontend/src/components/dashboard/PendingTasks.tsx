@@ -1,8 +1,12 @@
-import React from 'react'
+import Tasks from "../ui/Tasks";
+
 
 const PendingTasks = () => {
+ 
   return (
-    <div>PendingTasks</div>
+    <div>
+      <Tasks taskTitleName="Pending Task" type="pending"/>
+    </div>
   )
 }
 

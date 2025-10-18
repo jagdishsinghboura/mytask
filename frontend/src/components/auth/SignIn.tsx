@@ -18,10 +18,11 @@ const SignIn = () => {
     
     const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/user/sign-in` , data);
 
-    console.log(response);
+    console.log("responses" ,response);
 
     if(response){
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
       dispatch(setUser(response.data.user));
 
