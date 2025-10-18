@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../../utils/redux/store";
-import { useNavigate } from "react-router-dom";
 import LoadingPage from "../../utils/LoadingPage";
 
 

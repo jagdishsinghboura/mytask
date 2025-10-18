@@ -1,7 +1,6 @@
 import { Task } from "./Tasks";
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import { MdOutlineDoneOutline } from "react-icons/md";
 import { IoCloudDoneOutline } from "react-icons/io5";
 import { IoCloudDone } from "react-icons/io5";
 import axios from "axios";

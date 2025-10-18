@@ -1,4 +1,3 @@
-import { GoDotFill } from "react-icons/go";
 function LoadingPage() {
 
     return (

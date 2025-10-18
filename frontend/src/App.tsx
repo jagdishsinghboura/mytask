@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/Home.tsx/Layout";
 import AllTasks from "./components/dashboard/AllTasks";
 import CompletedTasks from "./components/dashboard/CompletedTasks";
