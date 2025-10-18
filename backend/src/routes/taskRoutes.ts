@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 router.post(
   "/add",
   authenticateJwt,
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response) : Promise<any>=> {
     const { title, description, dueDate } = req.body;
 
     try {
@@ -26,7 +26,7 @@ router.post(
       });
 
       if (!user) {
-        res.status(404).json({
+       return res.status(404).json({
           message: "user not found",
         });
       }
@@ -41,13 +41,13 @@ router.post(
         },
       });
 
-      res.status(201).json({
+     return res.status(201).json({
         message: "task add succefully",
         task,
       });
     } catch (error) {
       console.log("Error while adding the Task ", error);
-      res.status(500).json({
+     return res.status(500).json({
         message: "internal server error",
       });
     }
@@ -56,7 +56,7 @@ router.post(
 router.delete(
   "/delete/:taskId",
   authenticateJwt,
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response) : Promise<any>=> {
     const taskId = parseInt(req.params.taskId);
     const userId = req.user?.id;
 
@@ -89,7 +89,7 @@ router.delete(
         .json({ message: "task delete succefully", data: deleteTask });
     } catch (error) {
       console.log("error while delete the task ", error);
-      res.status(500).json({
+     return res.status(500).json({
         message: `internal server error `,
       });
     }
@@ -98,7 +98,7 @@ router.delete(
 router.put(
   "/update/:taskId",
   authenticateJwt,
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response) : Promise<any>=> {
     const { title, description, dueDate } = req.body;
 
     const isoDate = new Date(dueDate).toISOString();
@@ -120,10 +120,10 @@ router.put(
       });
 
       if (!task) {
-        res.status(404).json({ message: "task not found" });
+       return res.status(404).json({ message: "task not found" });
       }
       if (task?.userId !== req.user.id) {
-        res.status(404).json("Unauthorize:youcant update this task");
+       return res.status(404).json("Unauthorize:youcant update this task");
       }
 
       await prisma.task.update({
@@ -137,12 +137,12 @@ router.put(
         },
       });
 
-      res.status(200).json({
+     return res.status(200).json({
         message: "task updated susscefully",
       });
     } catch (error) {
       console.log("error while updating error", error);
-      res.status(500).json({
+     return res.status(500).json({
         message: "internal server error",
       });
     }
@@ -151,11 +151,11 @@ router.put(
 router.put(
   "/complete/:taskId",
   authenticateJwt,
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response) : Promise<any>=> {
     try {
       const taskId = parseInt(req.params.taskId);
       if (!taskId || !req.user.id) {
-        res.status(400).json({ message: "Task ID and user authentication required" });
+       return res.status(400).json({ message: "Task ID and user authentication required" });
       }
 
       const task = await prisma.task.findFirst({
@@ -163,11 +163,11 @@ router.put(
       });
 
       if (!task) {
-        res.status(404).json({ message: "Task not found" }); // FIXED: Added return
+       return res.status(404).json({ message: "Task not found" }); // FIXED: Added return
       }
 
       if (task?.userId !== req.user.id) {
-        res.status(403).json({ message: "Unauthorized: You cannot change this task" }); // FIXED: 403 for unauthorized
+       return res.status(403).json({ message: "Unauthorized: You cannot change this task" }); // FIXED: 403 for unauthorized
       }
 
       await prisma.task.update({
@@ -175,17 +175,17 @@ router.put(
         data: { status: "COMPLETED" },
       });
 
-      res.status(200).json({ message: "Task updated successfully" });
+     return res.status(200).json({ message: "Task updated successfully" });
     } catch (error) {
       console.error("Error while updating task:", error);
-      res.status(500).json({ message: "Internal server error" });
+     return res.status(500).json({ message: "Internal server error" });
     }
   }
 );
 
 router.get("/all",
   authenticateJwt,
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response) : Promise<any>=> {
 
 
 
@@ -197,16 +197,16 @@ router.get("/all",
       });
 
       if (!tasks) {
-        res.status(404).json({ message: "no tasks found" });
+       return res.status(404).json({ message: "no tasks found" });
       }
 
-      res.status(200).json({
+     return res.status(200).json({
         message: "All data fetched",
         data: tasks,
       });
     } catch (error) {
       console.log("error while fetaching the task", error);
-      res.status(500).json({
+     return res.status(500).json({
         message: "internal server error",
       });
     }
@@ -214,7 +214,7 @@ router.get("/all",
 );
 router.get("/completed",
   authenticateJwt,
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response) : Promise<any>=> {
 
 
     try {
@@ -226,16 +226,16 @@ router.get("/completed",
       });
 
       if (!tasks) {
-        res.status(404).json({ message: "no tasks found" });
+       return res.status(404).json({ message: "no tasks found" });
       }
 
-      res.status(200).json({
+     return res.status(200).json({
         message: "All data fetched",
         data: tasks,
       });
     } catch (error) {
       console.log("error while fetaching the task", error);
-      res.status(500).json({
+     return res.status(500).json({
         message: "internal server error",
       });
     }
@@ -245,7 +245,7 @@ router.get("/completed",
 
 router.get("/mytask/:id",
   authenticateJwt,
-  async (req: AuthRequest, res: Response) => {
+  async (req: AuthRequest, res: Response) : Promise<any>=> {
 
     const taskId = parseInt(req.params.id);
 
@@ -258,23 +258,23 @@ router.get("/mytask/:id",
       });
 
       if (!task) {
-        res.status(404).json({ message: "no tasks found" });
+       return res.status(404).json({ message: "no tasks found" });
       }
 
-      res.status(200).json({
+     return res.status(200).json({
         message: "All data fetched",
         data: task,
       });
     } catch (error) {
       console.log("error while fetaching the task", error);
-      res.status(500).json({
+     return res.status(500).json({
         message: "internal server error",
       });
     }
   }
 );
 
-router.get("/pending", authenticateJwt, async (req: AuthRequest, res: Response) => {
+router.get("/pending", authenticateJwt, async (req: AuthRequest, res: Response) : Promise<any>=> {
   try {
     const userTasks = await prisma.task.findMany({
       where: {
@@ -309,25 +309,25 @@ router.get("/pending", authenticateJwt, async (req: AuthRequest, res: Response) 
       }
     })
     if (!updatedpendingTasks) {
-      res.status(404).json({
+     return res.status(404).json({
         message: "No task is pending.. ",
         data: [],
       });
     }
-    res.status(200).json({
+   return res.status(200).json({
       message: "Pending task ",
       data: updatedpendingTasks,
     });
   } catch (error: any) {
     console.log("error in  /pending route :", error);
-    res.status(500).json({
+   return res.status(500).json({
       message: error.message,
     })
   }
 })
 
 
-router.get("/today-tasks", authenticateJwt, async (req: AuthRequest, res: Response) => {
+router.get("/today-tasks", authenticateJwt, async (req: AuthRequest, res: Response) : Promise<any>=> {
   try {
 
 
@@ -339,7 +339,7 @@ router.get("/today-tasks", authenticateJwt, async (req: AuthRequest, res: Respon
 
 
     if (!allTasks) {
-      res.status(404).json({
+     return res.status(404).json({
         message: "no tasks found",
         data: []
       });
@@ -359,19 +359,19 @@ router.get("/today-tasks", authenticateJwt, async (req: AuthRequest, res: Respon
 
     })
 
-    res.status(200).json({
+   return res.status(200).json({
       message: "todays tasks",
       data: duetasks,
     })
   } catch (error) {
     console.log("error while fetaching the task", error);
-    res.status(500).json({
+   return res.status(500).json({
       message: "internal server error",
     });
   }
 })
 
-router.get("/track", authenticateJwt, async (req: AuthRequest, res: Response) => {
+router.get("/track", authenticateJwt, async (req: AuthRequest, res: Response) : Promise<any>=> {
   try {
     const labels = ["IN_PROGRESS", "COMPLETED", "PENDING"];
     const data: { [key: string]: number } = {};
@@ -391,14 +391,14 @@ router.get("/track", authenticateJwt, async (req: AuthRequest, res: Response) =>
     
 
 
-    res.status(200).json({
+   return res.status(200).json({
       message:"track data",
       data ,
     })
 
   } catch (error: any) {
     console.log("erorr", error)
-    res.status(500).json({
+   return res.status(500).json({
       message: error.message,
     })
 

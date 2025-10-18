@@ -3,9 +3,13 @@ import { useForm } from "react-hook-form";
 import { useDispatch, } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../../utils/redux/userSlice";
+import { useState } from "react";
+import LoadingPage from "../../utils/LoadingPage";
 
 const SignIn = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading]  =useState(false);
+  
 
   const navigate = useNavigate();
   const {
@@ -14,24 +18,31 @@ const SignIn = () => {
   } = useForm();
 
   const onSubmit = async(data: object) => {
-    console.log(data);
-    
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/user/sign-in` , data);
 
-    console.log("responses" ,response);
+    
+    try {
+      setIsLoading(true);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/user/sign-in` , data);
+
 
     if(response){
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       dispatch(setUser(response.data.user));
+      setIsLoading(false);
 
       navigate("/");
+    }
+    } catch (error:any) {
+    setIsLoading(false)
+      console.log("error while signin ", error);
+      alert(error.message);
     }
     
   };
 
-  return (
+  return  isLoading ? <LoadingPage/> : (
     <div className="w-full flex max-auto flex-col justify-center items-center">
       <h1 className=" m-6 text-slate-500 text-2xl">Sign In </h1>
       <div className="flex  flex-col w-1/3  justify-center">
@@ -74,7 +85,7 @@ const SignIn = () => {
 
           <button
             type="submit"
-            className="bg-blue-300 text-white p-2 rounded w-full"
+            className="bg-blue-400 text-white p-2 rounded w-full"
           >
             Submit
           </button>

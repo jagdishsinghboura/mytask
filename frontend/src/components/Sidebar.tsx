@@ -56,6 +56,7 @@ function Sidebar() {
   const handleSignOut=()=>{
     localStorage.setItem("token", "");
     localStorage.setItem("user", "");
+    navigate("/sign-in")
   }
 
 

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../utils/redux/store";
 import { useNavigate } from "react-router-dom";
+import LoadingPage from "../../utils/LoadingPage";
 
 
 interface Props {
@@ -39,6 +40,8 @@ const getTasks = async (taskType: string): Promise<Task[]> => {
 
 const Tasks = ({ taskTitleName, type }: Props) => {
 
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -46,11 +49,12 @@ const Tasks = ({ taskTitleName, type }: Props) => {
    async function fetchTasks(type:string){
      const todos = await  getTasks(type);
      setTasks(todos);
+     setIsLoading(false);
     }
     fetchTasks(type)
   }, [type]);
 
-  return (
+  return isLoading ? <LoadingPage/>: (
     <div className="w-full flex flex-col m-5">
       <h1 className="text-3xl font-bold text-gray-900">{taskTitleName || "Task"}</h1>
       <div className="flex  gap-6 justify-start flex-wrap">
